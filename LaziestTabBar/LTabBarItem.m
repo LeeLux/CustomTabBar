@@ -30,6 +30,9 @@
     return self;
 }
 
+- (void)dealloc{
+}
+
 #pragma mark - Private
 
 - (void)setSelected:(BOOL)selected{
@@ -69,25 +72,58 @@
     self.selectedImageView.image = selectedImage;
     self.titleLabel.text = title;
     
-    [self.selectedImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self configLayout];
+}
+
+- (void)changeRotate:(NSNotification*)noti {
+    [self configLayout];
+}
+
+- (void)configLayout{
+    
+    [self configVerLayout];
+    
+}
+
+- (void)configVerLayout{
+    [self.selectedImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.mas_centerX);
         make.size.mas_equalTo(CGSizeMake(40, 40));
         make.bottom.equalTo(self.titleLabel.mas_top).offset(-5);
     }];
     
-    [self.normalImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.normalImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(5);
         make.size.mas_equalTo(CGSizeMake(23, 23));
         make.centerX.equalTo(self.mas_centerX);
     }];
     
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.normalImageView.mas_bottom).offset(5);
         make.centerX.equalTo(self.mas_centerX);
         make.bottom.equalTo(self.mas_bottom).offset(-2);
-    }];	
+    }];
 }
 
+- (void)configHorLayout{
+    [self.selectedImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.mas_top).offset(5);
+        make.centerX.equalTo(self.mas_centerX);
+        make.size.mas_equalTo(CGSizeMake(40, 40));
+    }];
+    
+    [self.normalImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(5);
+        make.size.mas_equalTo(CGSizeMake(23, 23));
+        make.centerX.equalTo(self.mas_centerX);
+    }];
+    
+    [self.titleLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(self.normalImageView.mas_centerY);
+        make.left.equalTo(self.normalImageView.mas_right).offset(10);
+        make.right.lessThanOrEqualTo(self.mas_right).offset(-5);
+    }];
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

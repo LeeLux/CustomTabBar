@@ -20,7 +20,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeRotate:) name:UIApplicationDidChangeStatusBarFrameNotification object:nil];
 
     LTabBarItem *itemOne = [[LTabBarItem alloc] initWithTitle:@"首页" image:[UIImage imageNamed:@"tab_home_normal"] selectedImage:[UIImage imageNamed:@"tab_home_selected"]];
     LTabBarItem *itemTwo = [[LTabBarItem alloc] initWithTitle:@"邻居" image:[UIImage imageNamed:@"tab_card_normal"] selectedImage:[UIImage imageNamed:@"tab_card_selected"]];
@@ -53,10 +52,6 @@
 
 - (void)ltabBar:(LTabBar *)tabBar didSelectItem:(LTabBarItem *)item{
     [self setSelectedIndex:item.tag- 1000];
-}
-
-- (void)changeRotate:(NSNotification*)noti {
-    self.customTabBar.frame = self.tabBar.bounds;
 }
 
 - (void)didReceiveMemoryWarning {
